@@ -1,0 +1,246 @@
+/* Home - Metodología BEM */
+.home {
+  width: 100%;
+}
+
+/* Hero Section */
+.home__hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+}
+
+.home__hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home__hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+.home__hero-highlight {
+  color: var(--primary-color);
+}
+
+.home__hero-description {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.home__hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.home__hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__hero-placeholder {
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  gap: 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Botones */
+.home__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.home__button--primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.home__button--primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.home__button--secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.home__button--secondary:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.home__button--large {
+  padding: 1.25rem 3rem;
+  font-size: 1.125rem;
+}
+
+/* Features Section */
+.home__features {
+  margin-bottom: 4rem;
+}
+
+.home__section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+}
+
+.home__features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.home__feature-card {
+  background-color: var(--bg-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.home__feature-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.home__feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.home__feature-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.home__feature-description {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* CTA Section */
+.home__cta {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: 1rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home__cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.home__cta-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.home__cta-description {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .home__hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home__hero-title {
+    font-size: 2.5rem;
+  }
+
+  .home__hero-placeholder {
+    height: 300px;
+    font-size: 4rem;
+  }
+
+  .home__section-title {
+    font-size: 2rem;
+  }
+
+  .home__cta-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home__hero-title {
+    font-size: 2rem;
+  }
+
+  .home__hero-description {
+    font-size: 1rem;
+  }
+
+  .home__hero-actions {
+    flex-direction: column;
+  }
+
+  .home__button {
+    width: 100%;
+  }
+
+  .home__hero-placeholder {
+    height: 250px;
+    font-size: 3rem;
+  }
+
+  .home__features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home__cta {
+    padding: 3rem 1.5rem;
+  }
+
+  .home__cta-title {
+    font-size: 1.75rem;
+  }
+
+  .home__cta-description {
+    font-size: 1rem;
+  }
+}
+

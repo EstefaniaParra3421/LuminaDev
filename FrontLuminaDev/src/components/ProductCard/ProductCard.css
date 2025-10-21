@@ -1,0 +1,166 @@
+/* ProductCard - Metodología BEM */
+.product-card {
+  background-color: var(--bg-color);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+/* Contenedor de imagen */
+.product-card__image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* Aspect ratio 4:3 */
+  background-color: var(--bg-light);
+  overflow: hidden;
+}
+
+.product-card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-card__image {
+  transform: scale(1.05);
+}
+
+/* Badges */
+.product-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+}
+
+.product-card__badge--low-stock {
+  background-color: #fbbf24;
+  color: #78350f;
+}
+
+.product-card__badge--out-of-stock {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* Contenido */
+.product-card__content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.product-card__category {
+  display: inline-block;
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product-card__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.product-card__description {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Footer del card */
+.product-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.product-card__price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.product-card__price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.product-card__stock {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+/* Botón */
+.product-card__button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.product-card__button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-card__button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.product-card__button:disabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .product-card__content {
+    padding: 1rem;
+  }
+
+  .product-card__title {
+    font-size: 1rem;
+  }
+
+  .product-card__price {
+    font-size: 1.25rem;
+  }
+}
+
