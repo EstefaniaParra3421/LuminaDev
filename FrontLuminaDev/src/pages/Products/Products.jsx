@@ -18,7 +18,11 @@ const Products = () => {
     try {
       setLoading(true);
       const data = await getProducts();
-      setProducts(data);
+      // Filtrar productos válidos (que tengan al menos un nombre)
+      const validProducts = Array.isArray(data) 
+        ? data.filter(p => p && (p.name || p.nombre))
+        : [];
+      setProducts(validProducts);
       setError(null);
     } catch (err) {
       setError('Error al cargar los productos. Por favor, intenta de nuevo.');
@@ -33,9 +37,15 @@ const Products = () => {
 
   // Filtrar productos
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+    // Obtener el nombre del producto (puede ser 'name' o 'nombre' según el backend)
+    const productName = product.name || product.nombre || '';
+    const productDescription = product.description || product.descripcion || '';
+    
+    const matchesSearch = productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         productDescription.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || 
+                          product.category === selectedCategory || 
+                          product.categoria === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 

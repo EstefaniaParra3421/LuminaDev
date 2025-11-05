@@ -1,9 +1,25 @@
 /* Footer - Metodología BEM */
 .footer {
-  background-color: var(--text-color);
+  background: linear-gradient(135deg, 
+    #0d1b4d 0%,
+    #1320C4 25%,
+    #0a1540 60%,
+    #050a1f 100%
+  );
   color: var(--bg-light);
   width: 100%;
   margin-top: auto;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-light), var(--primary-color));
 }
 
 .footer__container {
@@ -59,8 +75,9 @@
 }
 
 .footer__social-link:hover {
-  background-color: var(--primary-color);
+  background: var(--primary-color);
   transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(245, 197, 67, 0.4);
 }
 
 /* Listas */

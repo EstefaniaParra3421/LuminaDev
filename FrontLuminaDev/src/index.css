@@ -6,16 +6,27 @@
 }
 
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
+  /* Paleta de colores oficial de Ilumitech - Logo */
+  --primary-color: #F5C543;
+  --primary-dark: #d4a520;
+  --primary-light: #ffd966;
+  --accent-color: #1320C4;
+  --accent-dark: #0f1a9e;
+  --accent-light: #3d4fd9;
+  --secondary-color: #8B200B;
+  --secondary-light: #a52a15;
   --text-color: #1f2937;
   --text-light: #6b7280;
   --bg-color: #ffffff;
   --bg-light: #f9fafb;
+  --bg-accent: #FFF9E6;
+  --bg-accent-blue: #e8f4f8;
   --border-color: #e5e7eb;
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-yellow: 0 4px 12px rgba(245, 197, 67, 0.25);
+  --shadow-blue: 0 4px 12px rgba(19, 32, 196, 0.25);
 }
 
 body {

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend de Ilumitech - Plataforma de gestión de productos",
   "private": true,
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
