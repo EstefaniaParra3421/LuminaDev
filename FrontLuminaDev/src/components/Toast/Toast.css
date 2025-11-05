@@ -1,0 +1,95 @@
+/* Toast - Metodología BEM */
+.toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  min-width: 300px;
+  max-width: 450px;
+  padding: 1rem 1.25rem;
+  background: var(--bg-color);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 9999;
+  animation: toast-slide-in 0.3s ease;
+  border-left: 4px solid;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.toast__message {
+  flex: 1;
+  margin: 0;
+  color: var(--text-color);
+  font-size: 0.938rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.toast__close {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toast__close:hover {
+  color: var(--text-color);
+  transform: scale(1.1);
+}
+
+/* Variantes */
+.toast--success {
+  border-left-color: #10b981;
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.1), var(--bg-color));
+}
+
+.toast--error {
+  border-left-color: #ef4444;
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.1), var(--bg-color));
+}
+
+.toast--info {
+  border-left-color: var(--accent-color);
+  background: linear-gradient(to right, rgba(19, 32, 196, 0.1), var(--bg-color));
+}
+
+.toast--warning {
+  border-left-color: #f59e0b;
+  background: linear-gradient(to right, rgba(245, 158, 11, 0.1), var(--bg-color));
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .toast {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    min-width: auto;
+    max-width: none;
+  }
+}
+

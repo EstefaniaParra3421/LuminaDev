@@ -48,7 +48,7 @@
 .products__search-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(245, 197, 67, 0.2);
 }
 
 .products__search-icon {
@@ -89,7 +89,7 @@
 .products__category-select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(245, 197, 67, 0.2);
 }
 
 /* Grid de productos */
@@ -152,7 +152,7 @@
 }
 
 .products__retry-button:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-dark);
 }
 
 .products__empty {

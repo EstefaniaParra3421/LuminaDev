@@ -47,6 +47,9 @@ const Footer = () => {
               <li className="footer__list-item">
                 <Link to="/contact" className="footer__link">Contacto</Link>
               </li>
+              <li className="footer__list-item">
+                <Link to="/sitemap" className="footer__link">🗺️ Mapa del Sitio</Link>
+              </li>
             </ul>
           </div>
 
