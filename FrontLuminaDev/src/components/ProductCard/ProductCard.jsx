@@ -2,7 +2,13 @@ import React from 'react';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
-  const { name, price, description, image, category, stock } = product;
+  // Manejar diferentes nombres de propiedades (español/inglés)
+  const name = product.name || product.nombre || 'Producto sin nombre';
+  const price = product.price || product.precio || 0;
+  const description = product.description || product.descripcion || '';
+  const image = product.image || product.imagen || 'https://via.placeholder.com/300';
+  const category = product.category || product.categoria || '';
+  const stock = product.stock !== undefined ? product.stock : 0;
 
   const handleAddToCart = () => {
     console.log('Añadiendo producto al carrito:', product);
@@ -13,7 +19,7 @@ const ProductCard = ({ product }) => {
     <article className="product-card">
       <div className="product-card__image-container">
         <img 
-          src={image || 'https://via.placeholder.com/300'} 
+          src={image} 
           alt={name}
           className="product-card__image"
         />
@@ -47,7 +53,9 @@ const ProductCard = ({ product }) => {
 
         <div className="product-card__footer">
           <div className="product-card__price-container">
-            <span className="product-card__price">${price.toLocaleString('es-CO')}</span>
+            <span className="product-card__price">
+              ${typeof price === 'number' ? price.toLocaleString('es-CO') : '0'}
+            </span>
             {stock > 0 && (
               <span className="product-card__stock">{stock} disponibles</span>
             )}
