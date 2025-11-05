@@ -175,17 +175,7 @@
   font-size: 0.875rem;
   color: var(--text-light);
   line-height: 1.5;
-  margin: 0 0 0.75rem 0;
-}
-
-.sitemap__link-path {
-  display: inline-block;
-  font-size: 0.813rem;
-  font-family: 'Courier New', monospace;
-  color: var(--accent-color);
-  background-color: rgba(19, 32, 196, 0.05);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  margin: 0;
 }
 
 /* Badges */

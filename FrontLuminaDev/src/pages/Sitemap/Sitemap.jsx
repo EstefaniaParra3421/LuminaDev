@@ -5,39 +5,39 @@ import './Sitemap.css';
 const Sitemap = () => {
   const siteStructure = [
     {
-      title: 'Páginas Principales',
+      title: 'Explora Ilumitech',
       icon: '🏠',
       links: [
-        { path: '/', name: 'Inicio', description: 'Página principal con hero y características', status: 'active' },
-        { path: '/products', name: 'Productos', description: 'Catálogo completo de productos', status: 'active' },
-        { path: '/about', name: 'Acerca de', description: 'Información sobre Ilumitech', status: 'pending' },
-        { path: '/contact', name: 'Contacto', description: 'Formulario de contacto y ubicación', status: 'pending' }
+        { path: '/', name: 'Inicio', description: 'Descubre nuestras ofertas y novedades destacadas', status: 'active' },
+        { path: '/products', name: 'Catálogo de Productos', description: 'Explora todos nuestros productos de iluminación', status: 'active' },
+        { path: '/about', name: 'Acerca de Nosotros', description: 'Conoce nuestra historia y compromiso con la calidad', status: 'pending' },
+        { path: '/contact', name: 'Contáctanos', description: 'Estamos aquí para ayudarte con tus consultas', status: 'pending' }
       ]
     },
     {
-      title: 'Autenticación',
+      title: 'Tu Cuenta',
       icon: '🔐',
       links: [
-        { path: '/login', name: 'Iniciar Sesión', description: 'Acceso para usuarios registrados', status: 'active' },
-        { path: '/register', name: 'Registrarse', description: 'Crear una nueva cuenta', status: 'active' }
+        { path: '/login', name: 'Iniciar Sesión', description: 'Accede a tu cuenta personal', status: 'active' },
+        { path: '/register', name: 'Crear Cuenta', description: 'Únete a la comunidad Ilumitech', status: 'active' }
       ]
     },
     {
-      title: 'Usuario',
+      title: 'Mi Área Personal',
       icon: '👤',
       requiresAuth: true,
       links: [
-        { path: '/profile', name: 'Mi Perfil', description: 'Información personal y configuración', status: 'pending' },
-        { path: '/orders', name: 'Mis Pedidos', description: 'Historial de compras', status: 'pending' },
-        { path: '/wishlist', name: 'Lista de Deseos', description: 'Productos guardados', status: 'pending' }
+        { path: '/profile', name: 'Mi Perfil', description: 'Gestiona tu información personal y preferencias', status: 'pending' },
+        { path: '/orders', name: 'Mis Pedidos', description: 'Revisa tus compras y seguimiento de envíos', status: 'pending' },
+        { path: '/wishlist', name: 'Favoritos', description: 'Guarda tus productos preferidos para después', status: 'pending' }
       ]
     },
     {
-      title: 'Compras',
+      title: 'Proceso de Compra',
       icon: '🛒',
       links: [
-        { path: '/cart', name: 'Carrito', description: 'Productos en tu carrito', status: 'pending' },
-        { path: '/checkout', name: 'Checkout', description: 'Finalizar compra', status: 'pending' }
+        { path: '/cart', name: 'Mi Carrito', description: 'Revisa y modifica los productos que vas a comprar', status: 'pending' },
+        { path: '/checkout', name: 'Finalizar Compra', description: 'Completa tu pedido de forma rápida y segura', status: 'pending' }
       ]
     }
   ];
@@ -45,11 +45,11 @@ const Sitemap = () => {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'active':
-        return <span className="sitemap__badge sitemap__badge--active">✅ Activo</span>;
+        return <span className="sitemap__badge sitemap__badge--active">✅ Ya disponible</span>;
       case 'pending':
-        return <span className="sitemap__badge sitemap__badge--pending">🔜 Próximamente</span>;
+        return <span className="sitemap__badge sitemap__badge--pending">🔜 Muy pronto</span>;
       case 'development':
-        return <span className="sitemap__badge sitemap__badge--dev">🚧 En desarrollo</span>;
+        return <span className="sitemap__badge sitemap__badge--dev">🚧 En construcción</span>;
       default:
         return null;
     }
@@ -60,9 +60,9 @@ const Sitemap = () => {
       <div className="sitemap__container">
         {/* Header */}
         <div className="sitemap__header">
-          <h1 className="sitemap__title">Mapa del Sitio</h1>
+          <h1 className="sitemap__title">🗺️ Mapa del Sitio</h1>
           <p className="sitemap__subtitle">
-            Explora todas las secciones de Ilumitech
+            Encuentra fácilmente todo lo que necesitas en nuestra tienda
           </p>
         </div>
 
@@ -72,7 +72,7 @@ const Sitemap = () => {
             <span className="sitemap__stat-value">
               {siteStructure.reduce((acc, section) => acc + section.links.length, 0)}
             </span>
-            <span className="sitemap__stat-label">Total de páginas</span>
+            <span className="sitemap__stat-label">Secciones disponibles</span>
           </div>
           <div className="sitemap__stat">
             <span className="sitemap__stat-value">
@@ -80,7 +80,7 @@ const Sitemap = () => {
                 acc + section.links.filter(link => link.status === 'active').length, 0
               )}
             </span>
-            <span className="sitemap__stat-label">Páginas activas</span>
+            <span className="sitemap__stat-label">Ya disponibles</span>
           </div>
           <div className="sitemap__stat">
             <span className="sitemap__stat-value">
@@ -88,7 +88,7 @@ const Sitemap = () => {
                 acc + section.links.filter(link => link.status === 'pending').length, 0
               )}
             </span>
-            <span className="sitemap__stat-label">Próximamente</span>
+            <span className="sitemap__stat-label">Muy pronto</span>
           </div>
         </div>
 
@@ -100,12 +100,7 @@ const Sitemap = () => {
                 <span className="sitemap__section-icon">{section.icon}</span>
                 <h2 className="sitemap__section-title">{section.title}</h2>
                 {section.requiresAuth && (
-                  <span className="sitemap__section-badge">🔒 Requiere autenticación</span>
-                )}
-                {section.requiresAdmin && (
-                  <span className="sitemap__section-badge sitemap__section-badge--admin">
-                    👑 Solo Admin
-                  </span>
+                  <span className="sitemap__section-badge">🔒 Necesitas iniciar sesión</span>
                 )}
               </div>
 
@@ -125,7 +120,6 @@ const Sitemap = () => {
                       {getStatusBadge(link.status)}
                     </div>
                     <p className="sitemap__link-description">{link.description}</p>
-                    <code className="sitemap__link-path">{link.path}</code>
                   </div>
                 ))}
               </div>
@@ -133,44 +127,44 @@ const Sitemap = () => {
           ))}
         </div>
 
-        {/* Información adicional */}
+        {/* Información para el cliente */}
         <div className="sitemap__footer">
           <div className="sitemap__info">
-            <h3 className="sitemap__info-title">ℹ️ Información del Proyecto</h3>
+            <h3 className="sitemap__info-title">💡 ¿Por qué elegir Ilumitech?</h3>
             <div className="sitemap__info-grid">
               <div className="sitemap__info-item">
-                <strong>Tecnología:</strong>
-                <span>React 18 + React Router 6</span>
+                <strong>🚚 Envíos rápidos:</strong>
+                <span>Recibe tus productos en tiempo récord</span>
               </div>
               <div className="sitemap__info-item">
-                <strong>Metodología CSS:</strong>
-                <span>BEM (Block Element Modifier)</span>
+                <strong>🔒 Compra segura:</strong>
+                <span>Protegemos tu información y pagos</span>
               </div>
               <div className="sitemap__info-item">
-                <strong>API Backend:</strong>
-                <span>Node.js + Express + MongoDB</span>
+                <strong>⭐ Calidad garantizada:</strong>
+                <span>Productos certificados y duraderos</span>
               </div>
               <div className="sitemap__info-item">
-                <strong>Estado Global:</strong>
-                <span>Context API (Auth + Toast)</span>
+                <strong>💬 Soporte 24/7:</strong>
+                <span>Estamos aquí para ayudarte siempre</span>
               </div>
             </div>
           </div>
 
           <div className="sitemap__legend">
-            <h4 className="sitemap__legend-title">Leyenda:</h4>
+            <h4 className="sitemap__legend-title">📋 Guía de íconos:</h4>
             <div className="sitemap__legend-items">
               <div className="sitemap__legend-item">
-                <span className="sitemap__badge sitemap__badge--active">✅ Activo</span>
-                <span>Página funcional y disponible</span>
+                <span className="sitemap__badge sitemap__badge--active">✅ Ya disponible</span>
+                <span>Puedes acceder ahora mismo</span>
               </div>
               <div className="sitemap__legend-item">
-                <span className="sitemap__badge sitemap__badge--pending">🔜 Próximamente</span>
-                <span>En desarrollo o planificada</span>
+                <span className="sitemap__badge sitemap__badge--pending">🔜 Muy pronto</span>
+                <span>Estamos trabajando en ello</span>
               </div>
               <div className="sitemap__legend-item">
-                <span className="sitemap__section-badge">🔒 Requiere autenticación</span>
-                <span>Necesitas iniciar sesión</span>
+                <span className="sitemap__section-badge">🔒 Necesitas iniciar sesión</span>
+                <span>Crea tu cuenta para acceder</span>
               </div>
             </div>
           </div>
@@ -178,7 +172,7 @@ const Sitemap = () => {
 
         {/* Navegación rápida */}
         <div className="sitemap__quick-nav">
-          <h3 className="sitemap__quick-nav-title">Navegación Rápida</h3>
+          <h3 className="sitemap__quick-nav-title">🚀 Accesos rápidos para ti</h3>
           <div className="sitemap__quick-links">
             <Link to="/" className="sitemap__quick-link">
               <span className="sitemap__quick-link-icon">🏠</span>
@@ -186,11 +180,11 @@ const Sitemap = () => {
             </Link>
             <Link to="/products" className="sitemap__quick-link">
               <span className="sitemap__quick-link-icon">🛍️</span>
-              <span>Ver Productos</span>
+              <span>Explorar Productos</span>
             </Link>
             <Link to="/login" className="sitemap__quick-link">
               <span className="sitemap__quick-link-icon">🔐</span>
-              <span>Iniciar Sesión</span>
+              <span>Mi Cuenta</span>
             </Link>
           </div>
         </div>

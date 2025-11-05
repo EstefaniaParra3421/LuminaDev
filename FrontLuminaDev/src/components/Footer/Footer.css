@@ -1,6 +1,11 @@
 /* Footer - Metodología BEM */
 .footer {
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 50%, #0a1260 100%);
+  background: linear-gradient(135deg, 
+    #0d1b4d 0%,
+    #1320C4 25%,
+    #0a1540 60%,
+    #050a1f 100%
+  );
   color: var(--bg-light);
   width: 100%;
   margin-top: auto;
