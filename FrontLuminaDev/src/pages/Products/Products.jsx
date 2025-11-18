@@ -32,17 +32,23 @@ const Products = () => {
     }
   };
 
-  // Obtener categorías únicas
-  const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean))];
+  // Obtener categorías únicas (de category o categoria)
+  const categories = ['all', ...new Set(products.map(p => p.category || p.categoria).filter(Boolean))];
 
   // Filtrar productos
   const filteredProducts = products.filter(product => {
     // Obtener el nombre del producto (puede ser 'name' o 'nombre' según el backend)
     const productName = product.name || product.nombre || '';
     const productDescription = product.description || product.descripcion || '';
+    const productCategory = product.category || product.categoria || '';
     
-    const matchesSearch = productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         productDescription.toLowerCase().includes(searchTerm.toLowerCase());
+    // Buscar por nombre, descripción o categoría
+    const searchLower = searchTerm.toLowerCase();
+    const matchesSearch = searchTerm === '' || 
+                         productName.toLowerCase().includes(searchLower) ||
+                         productDescription.toLowerCase().includes(searchLower) ||
+                         productCategory.toLowerCase().includes(searchLower);
+    
     const matchesCategory = selectedCategory === 'all' || 
                           product.category === selectedCategory || 
                           product.categoria === selectedCategory;
@@ -63,7 +69,7 @@ const Products = () => {
           <input
             type="text"
             className="products__search-input"
-            placeholder="Buscar productos..."
+            placeholder="Buscar por nombre, descripción o categoría..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

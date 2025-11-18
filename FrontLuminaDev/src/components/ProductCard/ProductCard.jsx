@@ -6,13 +6,35 @@ const ProductCard = ({ product }) => {
   const name = product.name || product.nombre || 'Producto sin nombre';
   const price = product.price || product.precio || 0;
   const description = product.description || product.descripcion || '';
-  const image = product.image || product.imagen || 'https://via.placeholder.com/300';
   const category = product.category || product.categoria || '';
-  const stock = product.stock !== undefined ? product.stock : 0;
+  // Usar cantidad del backend, o stock como fallback para compatibilidad
+  const stock = product.cantidad !== undefined ? product.cantidad : (product.stock !== undefined ? product.stock : 0);
+  
+  // Construir URL de la imagen
+  const getImageUrl = () => {
+    // Si tiene portada (imagen subida), construir la URL del backend
+    if (product.portada) {
+      // Para imágenes, necesitamos usar la URL completa del backend
+      // porque el proxy solo funciona para peticiones axios, no para tags <img>
+      const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+      return `${API_BASE_URL}/uploads/products/${product.portada}`;
+    }
+    // Si tiene image o imagen (para compatibilidad)
+    if (product.image) return product.image;
+    if (product.imagen) return product.imagen;
+    // Imagen por defecto
+    return 'https://via.placeholder.com/300';
+  };
+  
+  const image = getImageUrl();
 
   const handleAddToCart = () => {
-    console.log('Añadiendo producto al carrito:', product);
     // Lógica para añadir al carrito
+  };
+
+  // Manejar error al cargar imagen
+  const handleImageError = (e) => {
+    e.target.src = 'https://via.placeholder.com/300';
   };
 
   return (
@@ -22,6 +44,7 @@ const ProductCard = ({ product }) => {
           src={image} 
           alt={name}
           className="product-card__image"
+          onError={handleImageError}
         />
         {stock < 10 && stock > 0 && (
           <span className="product-card__badge product-card__badge--low-stock">
