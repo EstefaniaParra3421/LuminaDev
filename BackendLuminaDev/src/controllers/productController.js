@@ -31,11 +31,33 @@ exports.uploadGaleria = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
-    const product = new productsModel(req.body);
+    const productData = { ...req.body };
+    
+    // Si hay archivos subidos, agregar los nombres de archivo
+    if (req.files) {
+      if (req.files.portada && req.files.portada[0]) {
+        productData.portada = req.files.portada[0].filename;
+      }
+      if (req.files.imagenes && req.files.imagenes.length > 0) {
+        productData.galeria = req.files.imagenes.map(file => file.filename);
+      }
+    }
+    
+    // Convertir precio a número si viene como string
+    if (productData.precio) {
+      productData.precio = parseFloat(productData.precio);
+    }
+    
+    // Convertir cantidad a número si viene como string
+    if (productData.cantidad !== undefined) {
+      productData.cantidad = parseInt(productData.cantidad) || 0;
+    }
+    
+    const product = new productsModel(productData);
     await product.save();
     res.status(201).json(product);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message || "Error al crear el producto" });
   }
 };
 
@@ -60,9 +82,31 @@ exports.getProductById = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+    
+    // Si hay archivos subidos, agregar los nombres de archivo
+    if (req.files) {
+      if (req.files.portada && req.files.portada[0]) {
+        updateData.portada = req.files.portada[0].filename;
+      }
+      if (req.files.imagenes && req.files.imagenes.length > 0) {
+        updateData.galeria = req.files.imagenes.map(file => file.filename);
+      }
+    }
+    
+    // Convertir precio a número si viene como string
+    if (updateData.precio) {
+      updateData.precio = parseFloat(updateData.precio);
+    }
+    
+    // Convertir cantidad a número si viene como string
+    if (updateData.cantidad !== undefined) {
+      updateData.cantidad = parseInt(updateData.cantidad) || 0;
+    }
+    
     const product = await productsModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
 

@@ -85,7 +85,17 @@ export const getProductById = async (id) => {
  */
 export const createProduct = async (productData) => {
   try {
-    const response = await apiClient.post('/products', productData);
+    // Si es FormData, usar configuración especial para multipart/form-data
+    const isFormData = productData instanceof FormData;
+    const config = isFormData
+      ? {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      : {};
+
+    const response = await apiClient.post('/products', productData, config);
     return response.data;
   } catch (error) {
     console.error('Error al crear producto:', error);
@@ -98,7 +108,17 @@ export const createProduct = async (productData) => {
  */
 export const updateProduct = async (id, productData) => {
   try {
-    const response = await apiClient.put(`/products/${id}`, productData);
+    // Si es FormData, usar configuración especial para multipart/form-data
+    const isFormData = productData instanceof FormData;
+    const config = isFormData
+      ? {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      : {};
+
+    const response = await apiClient.put(`/products/${id}`, productData, config);
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar producto ${id}:`, error);
@@ -151,6 +171,58 @@ export const register = async (userData) => {
 };
 
 /**
+ * Obtener todos los usuarios (solo para administradores)
+ */
+export const getUsers = async () => {
+  try {
+    const response = await apiClient.get('/users');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener usuarios:', error);
+    throw error;
+  }
+};
+
+/**
+ * Crear un nuevo usuario (solo para administradores)
+ */
+export const createUser = async (userData) => {
+  try {
+    const response = await apiClient.post('/users', userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear usuario:', error);
+    throw error;
+  }
+};
+
+/**
+ * Actualizar un usuario (solo para administradores)
+ */
+export const updateUser = async (id, userData) => {
+  try {
+    const response = await apiClient.put(`/users/${id}`, userData);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al actualizar usuario ${id}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Eliminar un usuario (solo para administradores)
+ */
+export const deleteUser = async (id) => {
+  try {
+    const response = await apiClient.delete(`/users/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al eliminar usuario ${id}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Logout de usuario
  */
 export const logout = () => {
@@ -182,6 +254,101 @@ export const addToCart = async (productId, quantity = 1) => {
     return response.data;
   } catch (error) {
     console.error('Error al agregar al carrito:', error);
+    throw error;
+  }
+};
+
+// ============= ÓRDENES =============
+
+/**
+ * Obtener todas las órdenes
+ */
+export const getOrders = async () => {
+  try {
+    const response = await apiClient.get('/orders');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener órdenes:', error);
+    throw error;
+  }
+};
+
+/**
+ * Obtener una orden por ID
+ */
+export const getOrderById = async (id) => {
+  try {
+    const response = await apiClient.get(`/orders/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener orden ${id}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Eliminar una orden
+ */
+export const deleteOrder = async (id) => {
+  try {
+    const response = await apiClient.delete(`/orders/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al eliminar orden ${id}:`, error);
+    throw error;
+  }
+};
+
+// ============= CATEGORÍAS =============
+
+/**
+ * Obtener todas las categorías
+ */
+export const getCategories = async () => {
+  try {
+    const response = await apiClient.get('/categories');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener categorías:', error);
+    throw error;
+  }
+};
+
+/**
+ * Crear una nueva categoría
+ */
+export const createCategory = async (categoryData) => {
+  try {
+    const response = await apiClient.post('/categories', categoryData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear categoría:', error);
+    throw error;
+  }
+};
+
+/**
+ * Actualizar una categoría
+ */
+export const updateCategory = async (id, categoryData) => {
+  try {
+    const response = await apiClient.put(`/categories/${id}`, categoryData);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al actualizar categoría ${id}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Eliminar una categoría
+ */
+export const deleteCategory = async (id) => {
+  try {
+    const response = await apiClient.delete(`/categories/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al eliminar categoría ${id}:`, error);
     throw error;
   }
 };

@@ -1,0 +1,444 @@
+.admin-dashboard {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.admin-dashboard__header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard__header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-dashboard__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-dashboard__user-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.admin-dashboard__logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard__logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.admin-dashboard__tabs {
+  background: white;
+  border-bottom: 2px solid #e0e0e0;
+  display: flex;
+  gap: 0;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.admin-dashboard__tab {
+  background: none;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.admin-dashboard__tab:hover {
+  color: #667eea;
+  background: #f9f9f9;
+}
+
+.admin-dashboard__tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.admin-dashboard__content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.admin-dashboard__section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-dashboard__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-dashboard__section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem 0;
+}
+
+.admin-dashboard__add-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard__add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.admin-dashboard__loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.admin-dashboard__empty {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.admin-dashboard__table-container {
+  overflow-x: auto;
+}
+
+.admin-dashboard__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-dashboard__table thead {
+  background: #f8f9fa;
+}
+
+.admin-dashboard__table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.admin-dashboard__table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  color: #666;
+}
+
+.admin-dashboard__table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.admin-dashboard__delete-btn,
+.admin-dashboard__edit-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin-right: 0.5rem;
+}
+
+.admin-dashboard__edit-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.admin-dashboard__edit-btn:hover {
+  background: #45a049;
+}
+
+.admin-dashboard__delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+.admin-dashboard__delete-btn:hover {
+  background: #da190b;
+}
+
+.admin-dashboard__products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.admin-dashboard__product-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.admin-dashboard__product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.admin-dashboard__product-image {
+  width: 100%;
+  height: 200px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.admin-dashboard__product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-dashboard__product-placeholder {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.admin-dashboard__product-info {
+  padding: 1rem;
+}
+
+.admin-dashboard__product-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.admin-dashboard__product-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #667eea;
+  margin: 0.5rem 0;
+}
+
+.admin-dashboard__product-category {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.admin-dashboard__product-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.admin-dashboard__role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.admin-dashboard__role-badge.admin {
+  background: #ff9800;
+  color: white;
+}
+
+.admin-dashboard__role-badge.user {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.admin-dashboard__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.admin-dashboard__modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.admin-dashboard__modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+.admin-dashboard__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-dashboard__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-dashboard__form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.admin-dashboard__form-group input,
+.admin-dashboard__form-group textarea {
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.admin-dashboard__form-group input:focus,
+.admin-dashboard__form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.admin-dashboard__select-wrapper {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.admin-dashboard__select-wrapper::after {
+  content: '▼';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #667eea;
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.admin-dashboard__select-wrapper:focus-within::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.admin-dashboard__select {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.admin-dashboard__select:hover {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.admin-dashboard__select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.admin-dashboard__select option {
+  padding: 0.75rem;
+  background: white;
+  color: #333;
+}
+
+.admin-dashboard__form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.admin-dashboard__form-actions button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard__form-actions button[type="button"] {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.admin-dashboard__form-actions button[type="button"]:hover {
+  background: #d0d0d0;
+}
+
+.admin-dashboard__form-actions button[type="submit"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.admin-dashboard__form-actions button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+

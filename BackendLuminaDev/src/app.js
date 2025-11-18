@@ -1,4 +1,6 @@
 ﻿const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const connectDB = require("./config/database");
 const routes = require("./routes");
 
@@ -10,13 +12,21 @@ const Cart = require("./models/cartModel");
 
 const app = express();
 
+// Crear directorio de uploads si no existe
+const uploadsDir = path.join(__dirname, "../uploads/products");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 connectDB();
 
 
 app.use(express.json());
 
 // Esto hace que /uploads/products/imagen.png sea accesible desde el navegador
-app.use("/uploads", express.static("uploads"));
+// Usar ruta absoluta para asegurar que funcione correctamente
+const uploadsStaticPath = path.join(__dirname, "../uploads");
+app.use("/uploads", express.static(uploadsStaticPath));
 
 // Usar las rutas definidas
 app.use("/", routes);
