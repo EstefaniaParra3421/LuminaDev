@@ -1,8 +1,20 @@
 import axios from 'axios';
 
-// URL base de la API - ajustar según configuración del backend
-// En desarrollo, usa el proxy configurado en package.json
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+// URL base de la API
+// En desarrollo: usa el proxy configurado en package.json (http://localhost:4000)
+// En producción: debe configurarse la variable de entorno REACT_APP_API_URL en Vercel
+// Ejemplo: REACT_APP_API_URL=https://tu-backend.railway.app o https://tu-backend.render.com
+const getApiBaseUrl = () => {
+  // Si está configurada la variable de entorno, usarla
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  // En desarrollo, el proxy de package.json manejará las peticiones
+  // En producción sin variable de entorno, retornar vacío (fallará - debe configurarse)
+  return '';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Crear instancia de axios con configuración base
 const apiClient = axios.create({
