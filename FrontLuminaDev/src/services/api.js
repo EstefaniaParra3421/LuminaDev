@@ -2,16 +2,29 @@ import axios from 'axios';
 
 // URL base de la API
 // En desarrollo: usa el proxy configurado en package.json (http://localhost:4000)
-// En producción: debe configurarse la variable de entorno REACT_APP_API_URL en Vercel
-// Ejemplo: REACT_APP_API_URL=https://tu-backend.railway.app o https://tu-backend.render.com
+// En producción: usa la variable de entorno REACT_APP_API_URL configurada en Vercel
 const getApiBaseUrl = () => {
-  // Si está configurada la variable de entorno, usarla
+  // Detectar si estamos en desarrollo o producción
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
+  // Si está configurada la variable de entorno, usarla (tanto en dev como en prod)
   if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
+    // Limpiar la URL: eliminar espacios y barras finales
+    let url = process.env.REACT_APP_API_URL.trim();
+    // Asegurar que no termine con barra
+    if (url.endsWith('/')) {
+      url = url.slice(0, -1);
+    }
+    return url;
   }
-  // En desarrollo, el proxy de package.json manejará las peticiones
-  // En producción sin variable de entorno, retornar vacío (fallará - debe configurarse)
-  return '';
+  
+  // En desarrollo sin variable de entorno, usar el proxy (retornar vacío)
+  if (isDevelopment) {
+    return '';
+  }
+  
+  // En producción sin variable de entorno, usar la URL por defecto del backend en Vercel
+  return 'https://backend-luminadev.vercel.app';
 };
 
 const API_BASE_URL = getApiBaseUrl();
