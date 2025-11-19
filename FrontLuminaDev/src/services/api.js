@@ -52,13 +52,20 @@ export const getImageBaseUrl = () => {
 const API_BASE_URL = getApiBaseUrl();
 
 // Crear instancia de axios con configuración base
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+// Si API_BASE_URL está vacío (desarrollo con proxy), no configurar baseURL
+const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
   timeout: 30000, // 30 segundos (Vercel Serverless Functions pueden tener cold starts)
-});
+};
+
+// Solo agregar baseURL si no está vacío (para producción o si hay variable de entorno)
+if (API_BASE_URL) {
+  axiosConfig.baseURL = API_BASE_URL;
+}
+
+const apiClient = axios.create(axiosConfig);
 
 // Interceptor para agregar token de autenticación si existe
 apiClient.interceptors.request.use(
@@ -69,7 +76,7 @@ apiClient.interceptors.request.use(
     }
     // Log para debugging (solo en desarrollo)
     if (process.env.NODE_ENV === 'development') {
-      console.log('🌐 Petición a:', config.baseURL + config.url);
+      const fullUrl = (config.baseURL || '(proxy)') + config.url;
     }
     return config;
   },
@@ -96,9 +103,19 @@ apiClient.interceptors.response.use(
     } else if (error.request) {
       // La petición fue hecha pero no hubo respuesta
       console.error('Error de red - No hubo respuesta del servidor');
-      console.error('URL intentada:', error.config?.baseURL + error.config?.url);
+      const attemptedUrl = (error.config?.baseURL || '') + (error.config?.url || '');
+      console.error('URL intentada:', attemptedUrl || error.config?.url || 'N/A');
       console.error('Tipo de error:', error.code);
       console.error('Mensaje:', error.message);
+      
+      // Si es ECONNREFUSED, probablemente el backend no está corriendo
+      if (error.code === 'ECONNREFUSED' || error.message.includes('ECONNREFUSED')) {
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        if (isDevelopment) {
+          console.error('⚠️ Error de conexión: El backend no está corriendo en localhost:4000');
+          console.error('💡 Solución: Ejecuta "npm run dev" en la carpeta BackendLuminaDev');
+        }
+      }
       
       // Si es timeout, dar más información
       if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
