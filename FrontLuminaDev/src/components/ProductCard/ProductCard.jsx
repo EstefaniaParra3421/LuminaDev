@@ -16,7 +16,23 @@ const ProductCard = ({ product }) => {
     if (product.portada) {
       // Para imágenes, necesitamos usar la URL completa del backend
       // porque el proxy solo funciona para peticiones axios, no para tags <img>
-      const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+      const isDevelopment = process.env.NODE_ENV === 'development';
+      let API_BASE_URL;
+      
+      if (process.env.REACT_APP_API_URL) {
+        // Limpiar la URL: eliminar espacios y barras finales
+        API_BASE_URL = process.env.REACT_APP_API_URL.trim();
+        if (API_BASE_URL.endsWith('/')) {
+          API_BASE_URL = API_BASE_URL.slice(0, -1);
+        }
+      } else if (isDevelopment) {
+        // En desarrollo, usar localhost
+        API_BASE_URL = 'http://localhost:4000';
+      } else {
+        // En producción sin variable de entorno, usar la URL por defecto
+        API_BASE_URL = 'https://backend-luminadev.vercel.app';
+      }
+      
       return `${API_BASE_URL}/uploads/products/${product.portada}`;
     }
     // Si tiene image o imagen (para compatibilidad)
