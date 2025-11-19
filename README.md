@@ -85,7 +85,7 @@ npm install
 npm start
 ```
 
-El servidor debería estar corriendo en `http://localhost:3000`
+El servidor debería estar corriendo en `http://localhost:4000`
 
 ### Frontend
 
@@ -109,7 +109,7 @@ cp .env.example .env
 npm start
 ```
 
-La aplicación debería abrir automáticamente en `http://localhost:3000` (o el siguiente puerto disponible)
+La aplicación debería abrir automáticamente en `http://localhost:4000` (o el siguiente puerto disponible)
 
 ## 📦 Modelos de Datos
 
