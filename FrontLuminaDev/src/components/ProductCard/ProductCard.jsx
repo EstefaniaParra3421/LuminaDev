@@ -1,4 +1,5 @@
 import React from 'react';
+import { getImageBaseUrl } from '../../services/api';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
@@ -16,28 +17,24 @@ const ProductCard = ({ product }) => {
     if (product.portada) {
       // Para imágenes, necesitamos usar la URL completa del backend
       // porque el proxy solo funciona para peticiones axios, no para tags <img>
-      const isDevelopment = process.env.NODE_ENV === 'development';
-      let API_BASE_URL;
-      
-      if (process.env.REACT_APP_API_URL) {
-        // Limpiar la URL: eliminar espacios y barras finales
-        API_BASE_URL = process.env.REACT_APP_API_URL.trim();
-        if (API_BASE_URL.endsWith('/')) {
-          API_BASE_URL = API_BASE_URL.slice(0, -1);
-        }
-      } else if (isDevelopment) {
-        // En desarrollo, usar localhost
-        API_BASE_URL = 'http://localhost:4000';
-      } else {
-        // En producción sin variable de entorno, usar la URL por defecto
-        API_BASE_URL = 'https://backend-luminadev.vercel.app';
-      }
-      
+      const API_BASE_URL = getImageBaseUrl();
       return `${API_BASE_URL}/uploads/products/${product.portada}`;
     }
     // Si tiene image o imagen (para compatibilidad)
-    if (product.image) return product.image;
-    if (product.imagen) return product.imagen;
+    // Validar que sea una URL válida (empiece con http:// o https://)
+    if (product.image) {
+      const imageUrl = product.image.trim();
+      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return imageUrl;
+      }
+      // Si no es una URL completa, podría ser una ruta relativa, ignorarla
+    }
+    if (product.imagen) {
+      const imagenUrl = product.imagen.trim();
+      if (imagenUrl.startsWith('http://') || imagenUrl.startsWith('https://')) {
+        return imagenUrl;
+      }
+    }
     // Imagen por defecto
     return 'https://via.placeholder.com/300';
   };

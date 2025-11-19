@@ -3,7 +3,7 @@ import axios from 'axios';
 // URL base de la API
 // En desarrollo: usa el proxy configurado en package.json (http://localhost:4000)
 // En producción: usa la variable de entorno REACT_APP_API_URL configurada en Vercel
-const getApiBaseUrl = () => {
+export const getApiBaseUrl = () => {
   // Detectar si estamos en desarrollo o producción
   const isDevelopment = process.env.NODE_ENV === 'development';
   
@@ -24,6 +24,28 @@ const getApiBaseUrl = () => {
   }
   
   // En producción sin variable de entorno, usar la URL por defecto del backend en Vercel
+  return 'https://backend-luminadev.vercel.app';
+};
+
+// Función helper para obtener la URL completa de imágenes (para usar en tags <img>)
+// El proxy no funciona para tags <img>, por lo que necesitamos la URL completa
+export const getImageBaseUrl = () => {
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
+  if (process.env.REACT_APP_API_URL) {
+    let url = process.env.REACT_APP_API_URL.trim();
+    if (url.endsWith('/')) {
+      url = url.slice(0, -1);
+    }
+    return url;
+  }
+  
+  // En desarrollo, usar localhost
+  if (isDevelopment) {
+    return 'http://localhost:4000';
+  }
+  
+  // En producción, usar la URL por defecto
   return 'https://backend-luminadev.vercel.app';
 };
 
