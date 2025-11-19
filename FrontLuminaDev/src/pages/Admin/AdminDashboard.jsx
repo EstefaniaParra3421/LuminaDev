@@ -16,7 +16,8 @@ import {
   getCategories,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getImageBaseUrl
 } from '../../services/api';
 import './AdminDashboard.css';
 
@@ -465,7 +466,7 @@ const AdminDashboard = () => {
                         <div className="admin-dashboard__product-image">
                           {product.portada ? (
                             <img
-                              src={`http://localhost:4000/uploads/products/${product.portada}`}
+                              src={`${getImageBaseUrl()}/uploads/products/${product.portada}`}
                               alt={product.nombre}
                               onError={(e) => {
                                 e.target.src = 'https://via.placeholder.com/200x150?text=Sin+Imagen';
