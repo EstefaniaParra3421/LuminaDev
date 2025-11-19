@@ -57,7 +57,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 segundos
+  timeout: 30000, // 30 segundos (Vercel Serverless Functions pueden tener cold starts)
 });
 
 // Interceptor para agregar token de autenticación si existe
@@ -66,6 +66,10 @@ apiClient.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    // Log para debugging (solo en desarrollo)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🌐 Petición a:', config.baseURL + config.url);
     }
     return config;
   },
@@ -81,6 +85,8 @@ apiClient.interceptors.response.use(
     if (error.response) {
       // El servidor respondió con un código de estado fuera del rango 2xx
       console.error('Error de respuesta:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('URL:', error.config?.url);
       
       // Si es un error 401, redirigir al login
       if (error.response.status === 401) {
@@ -89,10 +95,18 @@ apiClient.interceptors.response.use(
       }
     } else if (error.request) {
       // La petición fue hecha pero no hubo respuesta
-      console.error('Error de red:', error.request);
+      console.error('Error de red - No hubo respuesta del servidor');
+      console.error('URL intentada:', error.config?.baseURL + error.config?.url);
+      console.error('Tipo de error:', error.code);
+      console.error('Mensaje:', error.message);
+      
+      // Si es timeout, dar más información
+      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+        console.error('⚠️ Timeout: El servidor tardó más de 30 segundos en responder. Esto puede ser un cold start de Vercel.');
+      }
     } else {
       // Algo sucedió al configurar la petición
-      console.error('Error:', error.message);
+      console.error('Error al configurar la petición:', error.message);
     }
     return Promise.reject(error);
   }
