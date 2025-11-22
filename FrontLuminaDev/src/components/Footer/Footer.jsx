@@ -47,9 +47,9 @@ const Footer = () => {
               <li className="footer__list-item">
                 <Link to="/contact" className="footer__link">Contacto</Link>
               </li>
-              <li className="footer__list-item">
+              {/* <li className="footer__list-item">
                 <Link to="/sitemap" className="footer__link">🗺️ Mapa del Sitio</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -79,13 +79,13 @@ const Footer = () => {
               <li className="footer__list-item footer__contact-item">
                 <span className="footer__contact-icon">📧</span>
                 <a href="mailto:info@ilumitech.com" className="footer__link">
-                  info@ilumitech.com
+                  contacto.ilumitech@gmail.com
                 </a>
               </li>
               <li className="footer__list-item footer__contact-item">
                 <span className="footer__contact-icon">📱</span>
                 <a href="tel:+123456789" className="footer__link">
-                  +1 234 567 89
+                  +57 324 278 5517
                 </a>
               </li>
               <li className="footer__list-item footer__contact-item">

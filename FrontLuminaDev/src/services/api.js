@@ -91,14 +91,31 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response) {
       // El servidor respondió con un código de estado fuera del rango 2xx
-      console.error('Error de respuesta:', error.response.data);
-      console.error('Status:', error.response.status);
-      console.error('URL:', error.config?.url);
+      const status = error.response.status;
+      const url = error.config?.url;
+      
+      // No loguear errores 400 (Bad Request) como errores críticos
+      // Estos son errores esperados del usuario (credenciales incorrectas, validaciones, etc.)
+      if (status === 400) {
+        // Solo loguear en desarrollo para debugging
+        if (process.env.NODE_ENV === 'development') {
+          console.log('⚠️ Error de validación:', error.response.data);
+        }
+      } else {
+        // Para otros errores (500, 404, etc.), sí loguear como errores
+        console.error('Error de respuesta:', error.response.data);
+        console.error('Status:', status);
+        console.error('URL:', url);
+      }
       
       // Si es un error 401, redirigir al login
-      if (error.response.status === 401) {
+      if (status === 401) {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        localStorage.removeItem('user');
+        // Solo redirigir si no estamos ya en la página de login
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
       }
     } else if (error.request) {
       // La petición fue hecha pero no hubo respuesta
@@ -311,11 +328,24 @@ export const logout = () => {
 // ============= CARRITO =============
 
 /**
+ * Crear carrito para un usuario
+ */
+export const createCart = async (usuarioId) => {
+  try {
+    const response = await apiClient.post('/cart', { usuarioId });
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear carrito:', error);
+    throw error;
+  }
+};
+
+/**
  * Obtener carrito del usuario
  */
-export const getCart = async () => {
+export const getCart = async (usuarioId) => {
   try {
-    const response = await apiClient.get('/cart');
+    const response = await apiClient.get(`/cart/${usuarioId}`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener carrito:', error);
@@ -326,11 +356,32 @@ export const getCart = async () => {
 /**
  * Agregar producto al carrito
  */
-export const addToCart = async (productId, quantity = 1) => {
+export const addToCart = async (usuarioId, productoId, precio) => {
   try {
-    const response = await apiClient.post('/cart/add', { productId, quantity });
+    // Primero intentar agregar al carrito
+    const response = await apiClient.post('/cart/add', { 
+      usuarioId, 
+      productoId, 
+      precio 
+    });
     return response.data;
   } catch (error) {
+    // Si el carrito no existe (404), crearlo primero y luego agregar el producto
+    if (error.response?.status === 404) {
+      try {
+        await createCart(usuarioId);
+        // Intentar agregar el producto nuevamente
+        const retryResponse = await apiClient.post('/cart/add', { 
+          usuarioId, 
+          productoId, 
+          precio 
+        });
+        return retryResponse.data;
+      } catch (createError) {
+        console.error('Error al crear carrito o agregar producto:', createError);
+        throw createError;
+      }
+    }
     console.error('Error al agregar al carrito:', error);
     throw error;
   }
