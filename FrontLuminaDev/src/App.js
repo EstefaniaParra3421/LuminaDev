@@ -19,6 +19,7 @@ import Support from './pages/Support/Support';
 import Privacy from './pages/Privacy/Privacy';
 import Terms from './pages/Terms/Terms';
 import Cart from './pages/Cart/Cart';
+import ProductDetail from './pages/ProductDetail/ProductDetail';
 import AdminLogin from './pages/Admin/AdminLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import './App.css';
@@ -50,6 +51,7 @@ function App() {
                       <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/sitemap" element={<Sitemap />} />

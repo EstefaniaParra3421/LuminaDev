@@ -82,13 +82,31 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  // Manejar clic en la tarjeta para ver detalles
+  const handleCardClick = () => {
+    const productId = product._id || product.id;
+    if (productId) {
+      navigate(`/products/${productId}`);
+    }
+  };
+
+  // Manejar clic en el botón (evitar propagación)
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Evitar que se active el clic de la tarjeta
+    handleAddToCart();
+  };
+
   // Manejar error al cargar imagen
   const handleImageError = (e) => {
     e.target.src = 'https://via.placeholder.com/300';
   };
 
   return (
-    <article className="product-card">
+    <article 
+      className="product-card"
+      onClick={handleCardClick}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="product-card__image-container">
         <img 
           src={image} 
@@ -136,7 +154,7 @@ const ProductCard = ({ product }) => {
 
           <button 
             className="product-card__button"
-            onClick={handleAddToCart}
+            onClick={handleButtonClick}
             disabled={stock === 0}
           >
             {stock === 0 ? 'Agotado' : 'Añadir al carrito'}
