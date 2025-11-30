@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getImageBaseUrl } from '../../services/api';
 import './ProductCard.css';
 
@@ -51,6 +52,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
+  <Link to={`/products/${product._id || product.id}`} className="product-card-link">
     <article className="product-card">
       <div className="product-card__image-container">
         <img 
@@ -107,6 +109,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
     </article>
+    </Link>
   );
 };
 

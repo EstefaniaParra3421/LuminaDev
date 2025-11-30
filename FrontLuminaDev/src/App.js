@@ -12,6 +12,7 @@ import Register from './pages/Register/Register';
 import Sitemap from './pages/Sitemap/Sitemap';
 import AdminLogin from './pages/Admin/AdminLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ProductDetail from './pages/ProductDetail/ProductDetail';
 import './App.css';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                       <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/sitemap" element={<Sitemap />} />

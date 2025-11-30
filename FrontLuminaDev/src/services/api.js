@@ -159,6 +159,36 @@ export const getProductById = async (id) => {
 };
 
 /**
+ * Obtener productos relacionados por categoría
+ * @param {string} categoryId - ID o nombre de la categoría
+ * @param {string} excludeId - ID del producto actual para excluir
+ * @param {number} limit - Cantidad máxima de productos a retornar (default: 4)
+ * @returns {Promise<Array>} Array de productos relacionados
+ */
+export const getRelatedProducts = async (categoryId, excludeId, limit = 4) => {
+  try {
+    // Reutilizar la función getProducts existente
+    const allProducts = await getProducts();
+    
+    // Filtrar por categoría y excluir el producto actual
+    const related = allProducts
+      .filter(product => {
+        const productCategory = product.categoria || product.category;
+        const productId = product._id || product.id;
+        return productCategory === categoryId && productId !== excludeId;
+      })
+      .slice(0, limit);
+    
+    return related;
+  } catch (error) {
+    console.error('Error al obtener productos relacionados:', error);
+    return [];
+  }
+};
+
+
+
+/**
  * Crear un nuevo producto
  */
 export const createProduct = async (productData) => {
