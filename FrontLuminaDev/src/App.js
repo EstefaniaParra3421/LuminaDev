@@ -22,6 +22,7 @@ import Cart from './pages/Cart/Cart';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import AdminLogin from './pages/Admin/AdminLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ProductDetail from './pages/ProductDetail/ProductDetail';
 import './App.css';
 
 function App() {

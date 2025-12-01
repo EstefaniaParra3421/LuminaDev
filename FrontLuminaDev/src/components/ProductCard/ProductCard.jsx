@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { getImageBaseUrl } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
@@ -102,6 +104,8 @@ const ProductCard = ({ product }) => {
   };
 
   return (
+  <Link to={`/products/${product._id || product.id}`} className="product-card-link">
+    <article className="product-card">
     <article 
       className="product-card"
       onClick={handleCardClick}
@@ -162,6 +166,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
     </article>
+    </Link>
   );
 };
 
