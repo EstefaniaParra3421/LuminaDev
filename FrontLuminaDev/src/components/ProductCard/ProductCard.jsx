@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getImageBaseUrl } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
+import { getImageBaseUrl, addToCart } from '../../services/api';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+  const { showToast } = useToast();
   // Manejar diferentes nombres de propiedades (español/inglés)
   const name = product.name || product.nombre || 'Producto sin nombre';
   const price = product.price || product.precio || 0;
@@ -42,8 +49,53 @@ const ProductCard = ({ product }) => {
   
   const image = getImageUrl();
 
-  const handleAddToCart = () => {
-    // Lógica para añadir al carrito
+  const handleAddToCart = async () => {
+    // Verificar si el usuario está autenticado
+    if (!isAuthenticated() || !user) {
+      showToast('Debes iniciar sesión para agregar productos al carrito', 'warning');
+      navigate('/login');
+      return;
+    }
+
+    // Verificar que el producto tenga stock
+    if (stock === 0) {
+      showToast('Este producto está agotado', 'error');
+      return;
+    }
+
+    try {
+      // Obtener el ID del usuario (puede ser user.id o user._id)
+      const usuarioId = user.id || user._id;
+      // Obtener el ID del producto
+      const productoId = product._id || product.id;
+      
+      if (!usuarioId || !productoId) {
+        showToast('Error: No se pudo identificar el usuario o el producto', 'error');
+        return;
+      }
+
+      // Agregar al carrito
+      await addToCart(usuarioId, productoId, price);
+      showToast('Producto agregado al carrito', 'success');
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+      const errorMessage = error.response?.data?.message || 'Error al agregar el producto al carrito';
+      showToast(errorMessage, 'error');
+    }
+  };
+
+  // Manejar clic en la tarjeta para ver detalles
+  const handleCardClick = () => {
+    const productId = product._id || product.id;
+    if (productId) {
+      navigate(`/products/${productId}`);
+    }
+  };
+
+  // Manejar clic en el botón (evitar propagación)
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Evitar que se active el clic de la tarjeta
+    handleAddToCart();
   };
 
   // Manejar error al cargar imagen
@@ -54,6 +106,11 @@ const ProductCard = ({ product }) => {
   return (
   <Link to={`/products/${product._id || product.id}`} className="product-card-link">
     <article className="product-card">
+    <article 
+      className="product-card"
+      onClick={handleCardClick}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="product-card__image-container">
         <img 
           src={image} 
@@ -101,7 +158,7 @@ const ProductCard = ({ product }) => {
 
           <button 
             className="product-card__button"
-            onClick={handleAddToCart}
+            onClick={handleButtonClick}
             disabled={stock === 0}
           >
             {stock === 0 ? 'Agotado' : 'Añadir al carrito'}
