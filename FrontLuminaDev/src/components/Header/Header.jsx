@@ -28,6 +28,15 @@ const Header = () => {
     navigate('/');
   };
 
+  const handleCartClick = () => {
+    if (!user) {
+      showToast('Debes iniciar sesión para ver tu carrito', 'warning');
+      navigate('/login');
+      return;
+    }
+    navigate('/cart');
+  };
+
   return (
     <header className="header">
       <div className="header__glow"></div>
@@ -83,7 +92,7 @@ const Header = () => {
                 <span className="header__nav-text">Acerca de</span>
               </Link>
             </li>
-            <li className="header__nav-item">
+            {/* <li className="header__nav-item">
               <Link 
                 to="/contact" 
                 className="header__nav-link"
@@ -92,8 +101,8 @@ const Header = () => {
                 <span className="header__nav-icon">📧</span>
                 <span className="header__nav-text">Contacto</span>
               </Link>
-            </li>
-            <li className="header__nav-item">
+            </li> */}
+            {/* <li className="header__nav-item">
               <Link 
                 to="/sitemap" 
                 className="header__nav-link"
@@ -102,12 +111,16 @@ const Header = () => {
                 <span className="header__nav-icon">🗺️</span>
                 <span className="header__nav-text">Mapa</span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
         <div className="header__actions">
-          <button className="header__btn header__btn--cart">
+          <button 
+            className="header__btn header__btn--cart"
+            onClick={handleCartClick}
+            aria-label="Ver carrito"
+          >
             <span className="header__cart-icon">🛒</span>
             <span className="header__cart-count">0</span>
           </button>
