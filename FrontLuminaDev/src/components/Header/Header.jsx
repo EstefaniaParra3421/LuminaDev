@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
+import { getCart } from '../../services/api';
 import logoIlumitech from '../../assets/images/logo_ilumitech.png';
 import './Header.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const [cartCount, setCartCount] = useState(0);
+  const { user, logout, isAuthenticated } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -36,6 +38,58 @@ const Header = () => {
     }
     navigate('/cart');
   };
+
+  const loadCartCount = useCallback(async () => {
+    if (!isAuthenticated() || !user) {
+      setCartCount(0);
+      return;
+    }
+
+    try {
+      const usuarioId = user.id || user._id;
+      if (!usuarioId) {
+        setCartCount(0);
+        return;
+      }
+
+      const cart = await getCart(usuarioId);
+      if (cart && cart.productos) {
+        setCartCount(cart.productos.length);
+      } else {
+        setCartCount(0);
+      }
+    } catch (error) {
+      if (error.response?.status !== 404) {
+        console.error('Error al cargar contador del carrito:', error);
+      }
+      setCartCount(0);
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    loadCartCount();
+    
+    // Recargar el contador cada 5 segundos para mantenerlo actualizado
+    const interval = setInterval(() => {
+      if (isAuthenticated() && user) {
+        loadCartCount();
+      }
+    }, 5000);
+
+    // Actualizar cuando la ventana recupera el foco
+    const handleFocus = () => {
+      if (isAuthenticated() && user) {
+        loadCartCount();
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [user, isAuthenticated, loadCartCount]);
 
   return (
     <header className="header">
@@ -122,7 +176,9 @@ const Header = () => {
             aria-label="Ver carrito"
           >
             <span className="header__cart-icon">🛒</span>
-            <span className="header__cart-count">0</span>
+            {cartCount > 0 && (
+              <span className="header__cart-count">{cartCount}</span>
+            )}
           </button>
           
           {user ? (

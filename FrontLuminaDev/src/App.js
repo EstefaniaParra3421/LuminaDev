@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import AdminRoute from './components/AdminRoute/AdminRoute';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Home from './pages/Home/Home';
 import Products from './pages/Products/Products';
 import Login from './pages/Login/Login';
@@ -22,7 +23,6 @@ import Cart from './pages/Cart/Cart';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import AdminLogin from './pages/Admin/AdminLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
-import ProductDetail from './pages/ProductDetail/ProductDetail';
 import './App.css';
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
     <AuthProvider>
       <ToastProvider>
         <Router>
+          <ScrollToTop />
           <div className="app">
             <Routes>
               {/* Rutas de administración sin Header/Footer */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
@@ -58,31 +58,7 @@ const AdminDashboard = () => {
     descripcion: ''
   });
 
-  useEffect(() => {
-    // Verificar que el usuario sea administrador
-    if (!user || user.rol !== 'administrador') {
-      navigate('/admin123');
-      return;
-    }
-    loadData();
-  }, [user, navigate, activeTab]);
-
-  // Cargar categorías cuando se abre el modal de productos
-  useEffect(() => {
-    const loadCategoriesForModal = async () => {
-      if (showProductModal && categories.length === 0) {
-        try {
-          const categoriesData = await getCategories();
-          setCategories(categoriesData);
-        } catch (error) {
-          console.error('Error al cargar categorías:', error);
-        }
-      }
-    };
-    loadCategoriesForModal();
-  }, [showProductModal]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
       if (activeTab === 'productos') {
@@ -108,7 +84,31 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, showToast]);
+
+  useEffect(() => {
+    // Verificar que el usuario sea administrador
+    if (!user || user.rol !== 'administrador') {
+      navigate('/admin123');
+      return;
+    }
+    loadData();
+  }, [user, navigate, loadData]);
+
+  // Cargar categorías cuando se abre el modal de productos
+  useEffect(() => {
+    const loadCategoriesForModal = async () => {
+      if (showProductModal && categories.length === 0) {
+        try {
+          const categoriesData = await getCategories();
+          setCategories(categoriesData);
+        } catch (error) {
+          console.error('Error al cargar categorías:', error);
+        }
+      }
+    };
+    loadCategoriesForModal();
+  }, [showProductModal, categories.length]);
 
   const handleLogout = () => {
     logout();

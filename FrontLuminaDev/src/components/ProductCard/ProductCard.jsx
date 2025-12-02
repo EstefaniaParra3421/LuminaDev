@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { getImageBaseUrl } from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { getImageBaseUrl, addToCart } from '../../services/api';
@@ -104,13 +102,12 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-  <Link to={`/products/${product._id || product.id}`} className="product-card-link">
-    <article className="product-card">
-    <article 
-      className="product-card"
-      onClick={handleCardClick}
-      style={{ cursor: 'pointer' }}
-    >
+    <Link to={`/products/${product._id || product.id}`} className="product-card-link">
+      <article 
+        className="product-card"
+        onClick={handleCardClick}
+        style={{ cursor: 'pointer' }}
+      >
       <div className="product-card__image-container">
         <img 
           src={image} 
@@ -165,7 +162,7 @@ const ProductCard = ({ product }) => {
           </button>
         </div>
       </div>
-    </article>
+      </article>
     </Link>
   );
 };

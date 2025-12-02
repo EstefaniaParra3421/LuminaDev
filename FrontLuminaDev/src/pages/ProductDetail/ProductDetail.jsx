@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getProductById, getRelatedProducts, getImageBaseUrl } from '../../services/api';
+import { getProductById, getRelatedProducts, getImageBaseUrl, addToCart } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -110,15 +110,39 @@ const getImageUrl = (imagePath) => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) {
       showToast('Debes iniciar sesión para agregar al carrito', 'info');
       navigate('/login');
       return;
     }
 
-    // TODO: Implementar lógica de agregar al carrito
-    showToast(`${quantity} ${quantity > 1 ? 'productos agregados' : 'producto agregado'} al carrito`, 'success');
+    if (!inStock) {
+      showToast('Este producto está agotado', 'error');
+      return;
+    }
+
+    try {
+      const usuarioId = user.id || user._id;
+      const productoId = product._id || product.id;
+      const unitPrice = product.precio || product.price || 0;
+      
+      if (!usuarioId || !productoId) {
+        showToast('Error: No se pudo identificar el usuario o el producto', 'error');
+        return;
+      }
+
+      // Agregar la cantidad especificada al carrito
+      for (let i = 0; i < quantity; i++) {
+        await addToCart(usuarioId, productoId, unitPrice);
+      }
+      
+      showToast(`${quantity} ${quantity > 1 ? 'productos agregados' : 'producto agregado'} al carrito`, 'success');
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+      const errorMessage = error.response?.data?.message || 'Error al agregar el producto al carrito';
+      showToast(errorMessage, 'error');
+    }
   };
 
   const handleBuyNow = () => {
@@ -350,65 +374,6 @@ const getImageUrl = (imagePath) => {
           )}
         </div>
       )}
-    </div>
-  );
-};
-
-export default ProductDetail;
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getProductById } from '../../services/api';
-import './ProductDetail.css';
-
-const ProductDetail = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const productData = await getProductById(id);
-        setProduct(productData);
-        setError(null);
-      } catch (err) {
-        console.error('Error al cargar el producto:', err);
-        setError('Error al cargar el producto');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchProduct();
-    }
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="product-detail">
-        <div>Cargando...</div>
-      </div>
-    );
-  }
-
-  if (error || !product) {
-    return (
-      <div className="product-detail">
-        <div>Error al cargar el producto</div>
-      </div>
-    );
-  }
-
-  // Variable con la información del producto para que otros desarrolladores la usen
-  const productInfo = product;
-
-  return (
-    <div className="product-detail">
-      <div>Detalle del Producto</div>
-      {/* La variable productInfo contiene toda la información del producto */}
     </div>
   );
 };

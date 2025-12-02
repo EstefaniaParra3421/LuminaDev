@@ -44,9 +44,9 @@ const Footer = () => {
               <li className="footer__list-item">
                 <Link to="/about" className="footer__link">Acerca de</Link>
               </li>
-              <li className="footer__list-item">
+              {/* <li className="footer__list-item">
                 <Link to="/contact" className="footer__link">Contacto</Link>
-              </li>
+              </li> */}
               {/* <li className="footer__list-item">
                 <Link to="/sitemap" className="footer__link">🗺️ Mapa del Sitio</Link>
               </li> */}
@@ -63,9 +63,9 @@ const Footer = () => {
               <li className="footer__list-item">
                 <Link to="/shipping" className="footer__link">Envíos</Link>
               </li>
-              <li className="footer__list-item">
+              {/* <li className="footer__list-item">
                 <Link to="/returns" className="footer__link">Devoluciones</Link>
-              </li>
+              </li> */}
               <li className="footer__list-item">
                 <Link to="/support" className="footer__link">Soporte</Link>
               </li>
