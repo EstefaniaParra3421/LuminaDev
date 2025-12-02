@@ -1,4 +1,29 @@
 /* ProductCard - Metodología BEM */
+
+/**
+ * Link wrapper para ProductCard clickeable
+ * - Elimina estilos de link por defecto
+ * - Mantiene el cursor pointer
+ * - Hereda colores del tema
+ */
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.product-card-link:hover {
+  transform: translateY(-4px);
+}
+
+.product-card-link:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+
 .product-card {
   background-color: var(--bg-color);
   border-radius: 0.75rem;

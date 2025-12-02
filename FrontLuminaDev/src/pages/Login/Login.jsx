@@ -118,11 +118,20 @@ const Login = () => {
     } catch (error) {
       // Manejar errores del servidor
       if (error.response) {
-        setServerError(error.response.data.mensaje || 'Error al iniciar sesión');
+        // Extraer el mensaje de error del servidor
+        const errorMessage = error.response.data?.mensaje || error.response.data?.message || 'Error al iniciar sesión';
+        setServerError(errorMessage);
+        
+        // Mostrar también un toast para feedback visual
+        showToast(errorMessage, 'error');
       } else if (error.request) {
-        setServerError('No se pudo conectar con el servidor. Verifica tu conexión.');
+        const networkError = 'No se pudo conectar con el servidor. Verifica tu conexión.';
+        setServerError(networkError);
+        showToast(networkError, 'error');
       } else {
-        setServerError('Ocurrió un error inesperado. Intenta nuevamente.');
+        const unexpectedError = 'Ocurrió un error inesperado. Intenta nuevamente.';
+        setServerError(unexpectedError);
+        showToast(unexpectedError, 'error');
       }
     } finally {
       setIsLoading(false);
